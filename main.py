@@ -25,8 +25,40 @@ total_score = 0
 hints_used = 0
 
 game_history = []
-
 achievements = []
+
+player_name = ""
+
+# ==========================================
+# PLAYER RECORDS
+# ==========================================
+
+best_game_score = 0
+best_game_attempts = None
+worst_game_score = None
+
+
+# ==========================================
+# PLAYER NAME
+# ==========================================
+
+def setup_player():
+
+    global player_name
+
+    print("\n================================")
+    print("       PLAYER PROFILE")
+    print("================================")
+
+    player_name = input("Enter your name: ").strip()
+
+    if player_name == "":
+        player_name = "Player"
+
+    print("\nWelcome,", player_name + "!")
+    print("Your game profile has been created.")
+
+    input("\nPress Enter to continue...")
 
 
 # ==========================================
@@ -36,8 +68,209 @@ achievements = []
 def unlock_achievement(name):
 
     if name not in achievements:
+
         achievements.append(name)
+
         print("\n*** ACHIEVEMENT UNLOCKED:", name, "***")
+
+
+# ==========================================
+# PERFORMANCE RATING
+# ==========================================
+
+def get_performance_rating(attempts, max_attempts, score):
+
+    if attempts == 1:
+        return "LEGENDARY"
+
+    if score >= 150:
+        return "EXCELLENT"
+
+    if score >= 100:
+        return "GREAT"
+
+    if score >= 70:
+        return "GOOD"
+
+    if attempts <= max_attempts // 2:
+        return "DECENT"
+
+    return "NEEDS IMPROVEMENT"
+
+
+# ==========================================
+# CHECK PRIME NUMBER
+# ==========================================
+
+def is_prime(number):
+
+    if number < 2:
+        return False
+
+    for i in range(2, int(number ** 0.5) + 1):
+
+        if number % i == 0:
+            return False
+
+    return True
+
+
+# ==========================================
+# SMART HINT
+# ==========================================
+
+def give_smart_hint(number, maximum, guess):
+
+    hint_type = random.randint(1, 6)
+
+    print("\nSMART HINT")
+    print("--------------------------------")
+
+    # Even or odd
+
+    if hint_type == 1:
+
+        if number % 2 == 0:
+            print("The secret number is EVEN.")
+        else:
+            print("The secret number is ODD.")
+
+    # Prime
+
+    elif hint_type == 2:
+
+        if is_prime(number):
+            print("The secret number is a PRIME number.")
+        else:
+            print("The secret number is NOT a prime number.")
+
+    # Upper or lower half
+
+    elif hint_type == 3:
+
+        if number <= maximum // 2:
+            print("The number is in the LOWER half.")
+        else:
+            print("The number is in the UPPER half.")
+
+    # Divisibility
+
+    elif hint_type == 4:
+
+        divisors = [3, 5, 10]
+
+        divisor = random.choice(divisors)
+
+        if number % divisor == 0:
+
+            print(
+                "The number is divisible by",
+                divisor
+            )
+
+        else:
+
+            print(
+                "The number is NOT divisible by",
+                divisor
+            )
+
+    # Range
+
+    elif hint_type == 5:
+
+        lower = max(1, number - 15)
+        upper = min(maximum, number + 15)
+
+        print(
+            "The number is between",
+            lower,
+            "and",
+            upper
+        )
+
+    # Direction
+
+    else:
+
+        if number > guess:
+
+            print("The secret number is HIGHER than your guess.")
+
+        else:
+
+            print("The secret number is LOWER than your guess.")
+
+    print("--------------------------------")
+
+
+# ==========================================
+# PLAYER PROFILE
+# ==========================================
+
+def show_profile():
+
+    print("\n================================")
+    print("         PLAYER PROFILE")
+    print("================================")
+
+    print("Player:", player_name)
+    print("Games played:", games_played)
+    print("Games won:", games_won)
+
+    if games_played > 0:
+
+        win_rate = (
+            games_won /
+            games_played
+        ) * 100
+
+        print(
+            "Win rate:",
+            round(win_rate, 2),
+            "%"
+        )
+
+    else:
+
+        print("Win rate: 0%")
+
+    print("Current win streak:", win_streak)
+    print("Longest win streak:", longest_streak)
+
+    print("Total score:", total_score)
+    print("Total hints used:", hints_used)
+
+    print(
+        "Achievements unlocked:",
+        len(achievements)
+    )
+
+    if best_game_score > 0:
+
+        print(
+            "Best game score:",
+            best_game_score
+        )
+
+    else:
+
+        print("Best game score: None")
+
+    if best_game_attempts is not None:
+
+        print(
+            "Best game attempts:",
+            best_game_attempts
+        )
+
+    else:
+
+        print("Best game attempts: None")
+
+    print("================================")
+
+    input("\nPress Enter to return to the menu...")
 
 
 # ==========================================
@@ -50,40 +283,70 @@ def show_statistics():
     print("          STATISTICS")
     print("================================")
 
+    print("Player:", player_name)
     print("Games played:", games_played)
     print("Games won:", games_won)
 
     if games_played > 0:
-        win_rate = (games_won / games_played) * 100
-        print("Win rate:", round(win_rate, 2), "%")
+
+        win_rate = (
+            games_won /
+            games_played
+        ) * 100
+
+        print(
+            "Win rate:",
+            round(win_rate, 2),
+            "%"
+        )
+
     else:
+
         print("Win rate: 0%")
 
     print("Current win streak:", win_streak)
     print("Longest win streak:", longest_streak)
 
+    print("Total score:", total_score)
+    print("Total hints used:", hints_used)
+
     if games_won > 0:
-        average_attempts = total_attempts / games_won
-        average_score = total_score / games_won
 
-        print("Average attempts per win:",
-              round(average_attempts, 2))
+        average_attempts = (
+            total_attempts /
+            games_won
+        )
 
-        print("Average score:",
-              round(average_score, 2))
+        average_score = (
+            total_score /
+            games_won
+        )
+
+        print(
+            "Average attempts per win:",
+            round(average_attempts, 2)
+        )
+
+        print(
+            "Average score:",
+            round(average_score, 2)
+        )
 
     else:
+
         print("Average attempts per win: 0")
         print("Average score: 0")
 
     print("\nBest Scores")
     print("--------------------------------")
+
     print("Easy:", best_scores["Easy"])
     print("Medium:", best_scores["Medium"])
     print("Hard:", best_scores["Hard"])
 
     print("\nBest Attempts")
     print("--------------------------------")
+
     print("Easy:", best_attempts["Easy"])
     print("Medium:", best_attempts["Medium"])
     print("Hard:", best_attempts["Hard"])
@@ -92,10 +355,13 @@ def show_statistics():
     print("--------------------------------")
 
     if len(achievements) == 0:
+
         print("No achievements yet.")
 
     else:
+
         for achievement in achievements:
+
             print("-", achievement)
 
     print("================================")
@@ -114,17 +380,70 @@ def show_history():
     print("================================")
 
     if len(game_history) == 0:
+
         print("No games have been played yet.")
 
     else:
 
+        game_number = 1
+
         for game in game_history:
 
-            print("\nDifficulty:", game["difficulty"])
+            print("\nGame", game_number)
+
+            print("Difficulty:", game["difficulty"])
             print("Result:", game["result"])
             print("Attempts:", game["attempts"])
             print("Score:", game["score"])
+
+            if "rating" in game:
+                print("Performance:", game["rating"])
+
             print("Guesses:", game["guesses"])
+
+            print("--------------------------------")
+
+            game_number += 1
+
+    input("\nPress Enter to return to the menu...")
+
+
+# ==========================================
+# RECENT GAMES
+# ==========================================
+
+def show_recent_games():
+
+    print("\n================================")
+    print("         RECENT GAMES")
+    print("================================")
+
+    if len(game_history) == 0:
+
+        print("No games have been played yet.")
+
+    else:
+
+        recent_games = game_history[-5:]
+
+        game_number = 1
+
+        for game in recent_games:
+
+            print("\nGame", game_number)
+            print("Difficulty:", game["difficulty"])
+            print("Result:", game["result"])
+            print("Attempts:", game["attempts"])
+            print("Score:", game["score"])
+
+            if "rating" in game:
+
+                print(
+                    "Performance:",
+                    game["rating"]
+                )
+
+            game_number += 1
 
             print("--------------------------------")
 
@@ -149,10 +468,18 @@ def show_leaderboard():
         score = best_scores[difficulty]
 
         if score is None:
-            print(difficulty + ":", "No score yet")
+
+            print(
+                difficulty + ":",
+                "No score yet"
+            )
 
         else:
-            print(difficulty + ":", score)
+
+            print(
+                difficulty + ":",
+                score
+            )
 
     print("\nFEWEST ATTEMPTS")
     print("--------------------------------")
@@ -162,10 +489,101 @@ def show_leaderboard():
         attempts = best_attempts[difficulty]
 
         if attempts is None:
-            print(difficulty + ":", "No record yet")
+
+            print(
+                difficulty + ":",
+                "No record yet"
+            )
 
         else:
-            print(difficulty + ":", attempts)
+
+            print(
+                difficulty + ":",
+                attempts
+            )
+
+    print("\nOVERALL RECORDS")
+    print("--------------------------------")
+
+    if best_game_score > 0:
+
+        print(
+            "Highest game score:",
+            best_game_score
+        )
+
+    else:
+
+        print("Highest game score: None")
+
+    if best_game_attempts is not None:
+
+        print(
+            "Fewest attempts:",
+            best_game_attempts
+        )
+
+    else:
+
+        print("Fewest attempts: None")
+
+    print("\nLONGEST WIN STREAK")
+    print("--------------------------------")
+
+    print(longest_streak)
+
+    print("================================")
+
+    input("\nPress Enter to return to the menu...")
+
+
+# ==========================================
+# ACHIEVEMENTS
+# ==========================================
+
+def show_achievements():
+
+    all_achievements = [
+        "First Win",
+        "Perfect Guess",
+        "No Hints Used",
+        "5 Win Streak",
+        "10 Win Streak",
+        "Score Master",
+        "Lucky Guess",
+        "Hard Mode Winner",
+        "Custom Champion",
+        "Guessing Master"
+    ]
+
+    print("\n================================")
+    print("          ACHIEVEMENTS")
+    print("================================")
+
+    print(
+        "Unlocked:",
+        len(achievements),
+        "/",
+        len(all_achievements)
+    )
+
+    print("--------------------------------")
+
+    for achievement in all_achievements:
+
+        if achievement in achievements:
+
+            print(
+                "[UNLOCKED]",
+                achievement
+            )
+
+        else:
+
+            print(
+                "[LOCKED]",
+                achievement
+            )
 
     print("================================")
 
@@ -183,19 +601,41 @@ def custom_game():
     print("================================")
 
     try:
-        maximum = int(input("Enter maximum number: "))
-        max_attempts = int(input("Enter number of attempts: "))
+
+        maximum = int(
+            input("Enter maximum number: ")
+        )
+
+        max_attempts = int(
+            input("Enter number of attempts: ")
+        )
 
     except ValueError:
+
         print("Please enter valid numbers.")
+
+        input("\nPress Enter to continue...")
+
         return
 
     if maximum < 10:
-        print("Maximum number must be at least 10.")
+
+        print(
+            "Maximum number must be at least 10."
+        )
+
+        input("\nPress Enter to continue...")
+
         return
 
     if max_attempts < 1:
-        print("Attempts must be at least 1.")
+
+        print(
+            "Attempts must be at least 1."
+        )
+
+        input("\nPress Enter to continue...")
+
         return
 
     play_game(
@@ -206,10 +646,245 @@ def custom_game():
 
 
 # ==========================================
+# SCORE CALCULATION
+# ==========================================
+
+def calculate_score(
+    attempts,
+    difficulty,
+    hints_this_game,
+    win_streak
+):
+
+    score = 100
+
+    # Attempt penalty
+
+    score -= (
+        (attempts - 1) *
+        10
+    )
+
+    # Difficulty bonus
+
+    if difficulty == "Easy":
+
+        score += 0
+
+    elif difficulty == "Medium":
+
+        score += 20
+
+    elif difficulty == "Hard":
+
+        score += 40
+
+    elif difficulty == "Custom":
+
+        score += 30
+
+    # Hint penalty
+
+    score -= (
+        hints_this_game *
+        10
+    )
+
+    # Streak bonus
+
+    if win_streak >= 2:
+
+        score += (
+            win_streak *
+            5
+        )
+
+    # Minimum score
+
+    if score < 10:
+
+        score = 10
+
+    return score
+
+
+# ==========================================
+# UPDATE BEST RECORDS
+# ==========================================
+
+def update_records(
+    difficulty,
+    score,
+    attempts
+):
+
+    global best_game_score
+    global best_game_attempts
+
+    # Overall best score
+
+    if score > best_game_score:
+
+        best_game_score = score
+
+        print("\nNEW OVERALL BEST SCORE!")
+
+    # Overall fewest attempts
+
+    if best_game_attempts is None:
+
+        best_game_attempts = attempts
+
+    elif attempts < best_game_attempts:
+
+        best_game_attempts = attempts
+
+        print("NEW OVERALL ATTEMPT RECORD!")
+
+    # Difficulty score
+
+    if difficulty in best_scores:
+
+        if best_scores[difficulty] is None:
+
+            best_scores[difficulty] = score
+
+            print(
+                "NEW BEST",
+                difficulty,
+                "SCORE!"
+            )
+
+        elif score > best_scores[difficulty]:
+
+            best_scores[difficulty] = score
+
+            print(
+                "NEW BEST",
+                difficulty,
+                "SCORE!"
+            )
+
+    # Difficulty attempts
+
+    if difficulty in best_attempts:
+
+        if best_attempts[difficulty] is None:
+
+            best_attempts[difficulty] = attempts
+
+        elif attempts < best_attempts[difficulty]:
+
+            best_attempts[difficulty] = attempts
+
+            print(
+                "NEW BEST",
+                difficulty,
+                "ATTEMPT RECORD!"
+            )
+
+
+# ==========================================
+# GAME SUMMARY
+# ==========================================
+
+def show_game_summary(
+    number,
+    attempts,
+    score,
+    guess_history,
+    rating,
+    win_streak
+):
+
+    print("\n================================")
+    print("         GAME SUMMARY")
+    print("================================")
+
+    print("Player:", player_name)
+    print("Result: WIN")
+    print("Secret number:", number)
+    print("Attempts:", attempts)
+    print("Score:", score)
+    print("Performance:", rating)
+    print("Current streak:", win_streak)
+
+    accuracy = (
+        1 /
+        attempts
+    ) * 100
+
+    print(
+        "Guess accuracy:",
+        round(accuracy, 2),
+        "%"
+    )
+
+    print("\nGuess Analysis")
+    print("--------------------------------")
+
+    print(
+        "Lowest guess:",
+        min(guess_history)
+    )
+
+    print(
+        "Highest guess:",
+        max(guess_history)
+    )
+
+    average_guess = (
+        sum(guess_history) /
+        len(guess_history)
+    )
+
+    print(
+        "Average guess:",
+        round(average_guess, 2)
+    )
+
+    print("\nYour guesses:")
+    print(guess_history)
+
+    print("================================")
+
+
+# ==========================================
+# PLAY AGAIN
+# ==========================================
+
+def play_again():
+
+    while True:
+
+        choice = input(
+            "\nWould you like to play again? (yes/no): "
+        ).lower().strip()
+
+        if choice == "yes":
+
+            return True
+
+        elif choice == "no":
+
+            return False
+
+        else:
+
+            print(
+                "Please enter yes or no."
+            )
+
+
+# ==========================================
 # PLAY GAME FUNCTION
 # ==========================================
 
-def play_game(maximum, max_attempts, difficulty):
+def play_game(
+    maximum,
+    max_attempts,
+    difficulty
+):
 
     global games_played
     global games_won
@@ -218,8 +893,12 @@ def play_game(maximum, max_attempts, difficulty):
     global longest_streak
     global total_score
     global hints_used
+    global worst_game_score
 
-    number = random.randint(1, maximum)
+    number = random.randint(
+        1,
+        maximum
+    )
 
     attempts = 0
     score = 100
@@ -236,11 +915,14 @@ def play_game(maximum, max_attempts, difficulty):
     print("         GAME START")
     print("================================")
 
+    print("Player:", player_name)
     print("Difficulty:", difficulty)
     print("Number range: 1 -", maximum)
     print("Attempts:", max_attempts)
 
-    print("\nType 0 at any time to quit this game.")
+    print(
+        "\nType 0 at any time to quit this game."
+    )
 
     print("================================")
 
@@ -258,7 +940,10 @@ def play_game(maximum, max_attempts, difficulty):
 
         except ValueError:
 
-            print("Please enter a valid number.")
+            print(
+                "Please enter a valid number."
+            )
+
             continue
 
         # ==========================================
@@ -267,17 +952,25 @@ def play_game(maximum, max_attempts, difficulty):
 
         if guess == 0:
 
-            print("\nYou left the current game.")
+            print(
+                "\nYou left the current game."
+            )
 
             win_streak = 0
 
             game_history.append({
+
                 "difficulty": difficulty,
                 "result": "Quit",
                 "attempts": attempts,
                 "score": 0,
-                "guesses": guess_history
+                "guesses": guess_history.copy()
+
             })
+
+            input(
+                "\nPress Enter to return to the menu..."
+            )
 
             return
 
@@ -288,7 +981,9 @@ def play_game(maximum, max_attempts, difficulty):
         if guess < 1 or guess > maximum:
 
             print(
-                "Please enter a number between 1 and",
+                "Please enter a number between",
+                1,
+                "and",
                 maximum
             )
 
@@ -300,15 +995,21 @@ def play_game(maximum, max_attempts, difficulty):
 
         if guess in guess_history:
 
-            print("You already guessed that number.")
+            print(
+                "You already guessed that number."
+            )
+
             continue
 
         attempts += 1
+
         total_attempts += 1
 
         guess_history.append(guess)
 
-        difference = abs(number - guess)
+        difference = abs(
+            number - guess
+        )
 
         # ==========================================
         # CORRECT GUESS
@@ -320,159 +1021,178 @@ def play_game(maximum, max_attempts, difficulty):
             print("        CONGRATULATIONS!")
             print("================================")
 
-            print("You guessed the correct number!")
-            print("The number was:", number)
-            print("Attempts:", attempts)
+            print(
+                "You guessed the correct number!"
+            )
+
+            print(
+                "The number was:",
+                number
+            )
+
+            print(
+                "Attempts:",
+                attempts
+            )
 
             # ==========================================
-            # SCORE CALCULATION
+            # SCORE
             # ==========================================
 
-            score = 100 - ((attempts - 1) * 10)
+            score = calculate_score(
+                attempts,
+                difficulty,
+                hints_this_game,
+                win_streak
+            )
 
-            # Difficulty bonus
+            # Lucky guess bonus
 
-            if difficulty == "Medium":
-                score += 20
+            if attempts == 1:
 
-            elif difficulty == "Hard":
-                score += 40
+                score += 50
 
-            elif difficulty == "Custom":
-                score += 30
+                print(
+                    "\nLUCKY GUESS BONUS: +50"
+                )
 
-            # Hint penalty
-
-            score -= hints_this_game * 10
-
-            # Win streak bonus
-
-            if win_streak >= 2:
-                score += win_streak * 5
-
-            # Minimum score
-
-            if score < 10:
-                score = 10
-
-            print("Your score:", score)
+                unlock_achievement(
+                    "Lucky Guess"
+                )
 
             # ==========================================
             # UPDATE STATISTICS
             # ==========================================
 
             games_won += 1
+
             total_score += score
 
             win_streak += 1
 
             if win_streak > longest_streak:
+
                 longest_streak = win_streak
+
+            print(
+                "\nYour score:",
+                score
+            )
+
+            print(
+                "Current win streak:",
+                win_streak
+            )
+
+            # ==========================================
+            # PERFORMANCE
+            # ==========================================
+
+            rating = get_performance_rating(
+                attempts,
+                max_attempts,
+                score
+            )
+
+            print(
+                "Performance:",
+                rating
+            )
 
             # ==========================================
             # ACHIEVEMENTS
             # ==========================================
 
             if games_won == 1:
-                unlock_achievement("First Win")
+
+                unlock_achievement(
+                    "First Win"
+                )
 
             if attempts == 1:
-                unlock_achievement("Perfect Guess")
+
+                unlock_achievement(
+                    "Perfect Guess"
+                )
 
             if hints_this_game == 0:
-                unlock_achievement("No Hints Used")
+
+                unlock_achievement(
+                    "No Hints Used"
+                )
 
             if win_streak == 5:
-                unlock_achievement("5 Win Streak")
 
-            # ==========================================
-            # BEST SCORE
-            # ==========================================
+                unlock_achievement(
+                    "5 Win Streak"
+                )
 
-            if difficulty in best_scores:
+            if win_streak == 10:
 
-                if best_scores[difficulty] is None:
+                unlock_achievement(
+                    "10 Win Streak"
+                )
 
-                    best_scores[difficulty] = score
+            if score >= 150:
 
-                    print("NEW BEST SCORE!")
+                unlock_achievement(
+                    "Score Master"
+                )
 
-                elif score > best_scores[difficulty]:
+            if difficulty == "Hard":
 
-                    best_scores[difficulty] = score
+                unlock_achievement(
+                    "Hard Mode Winner"
+                )
 
-                    print("NEW BEST SCORE!")
+            if difficulty == "Custom":
 
-                print(
-                    "Best",
-                    difficulty,
-                    "score:",
-                    best_scores[difficulty]
+                unlock_achievement(
+                    "Custom Champion"
+                )
+
+            if games_won >= 10:
+
+                unlock_achievement(
+                    "Guessing Master"
                 )
 
             # ==========================================
-            # BEST ATTEMPTS
+            # BEST RECORDS
             # ==========================================
 
-            if difficulty in best_attempts:
-
-                if best_attempts[difficulty] is None:
-
-                    best_attempts[difficulty] = attempts
-
-                elif attempts < best_attempts[difficulty]:
-
-                    best_attempts[difficulty] = attempts
-
-                    print("NEW BEST ATTEMPT RECORD!")
-
-            # ==========================================
-            # ACCURACY
-            # ==========================================
-
-            accuracy = (1 / attempts) * 100
-
-            print(
-                "Guess accuracy:",
-                round(accuracy, 2),
-                "%"
+            update_records(
+                difficulty,
+                score,
+                attempts
             )
 
             # ==========================================
-            # GUESS ANALYSIS
+            # GAME SUMMARY
             # ==========================================
 
-            print("\nGuess Analysis")
-
-            print("Lowest guess:",
-                  min(guess_history))
-
-            print("Highest guess:",
-                  max(guess_history))
-
-            average_guess = (
-                sum(guess_history) /
-                len(guess_history)
+            show_game_summary(
+                number,
+                attempts,
+                score,
+                guess_history,
+                rating,
+                win_streak
             )
-
-            print(
-                "Average guess:",
-                round(average_guess, 2)
-            )
-
-            print("\nYour guesses:")
-            print(guess_history)
 
             # ==========================================
             # SAVE GAME HISTORY
             # ==========================================
 
             game_history.append({
+
                 "difficulty": difficulty,
                 "result": "Won",
                 "attempts": attempts,
                 "score": score,
+                "rating": rating,
                 "guesses": guess_history.copy()
+
             })
 
             break
@@ -495,19 +1215,27 @@ def play_game(maximum, max_attempts, difficulty):
 
         if difference <= 5:
 
-            print("🔥 VERY HOT! You are extremely close.")
+            print(
+                "🔥 VERY HOT! You are extremely close."
+            )
 
         elif difference <= 15:
 
-            print("Hot! You are close.")
+            print(
+                "Hot! You are close."
+            )
 
         elif difference <= 30:
 
-            print("Warm. You are getting closer.")
+            print(
+                "Warm. You are getting closer."
+            )
 
         else:
 
-            print("Cold. You are far from the number.")
+            print(
+                "Cold. You are far from the number."
+            )
 
         # ==========================================
         # CLOSER / FARTHER SYSTEM
@@ -517,11 +1245,15 @@ def play_game(maximum, max_attempts, difficulty):
 
             if difference < previous_difference:
 
-                print("You are getting CLOSER!")
+                print(
+                    "You are getting CLOSER!"
+                )
 
             elif difference > previous_difference:
 
-                print("You are getting FARTHER!")
+                print(
+                    "You are getting FARTHER!"
+                )
 
             else:
 
@@ -549,77 +1281,19 @@ def play_game(maximum, max_attempts, difficulty):
 
             hint_choice = input(
                 "Would you like a hint? (yes/no): "
-            ).lower()
+            ).lower().strip()
 
             if hint_choice == "yes":
 
                 hints_this_game += 1
+
                 hints_used += 1
 
-                print("\nHINT")
-
-                # Random hint
-
-                hint_type = random.randint(1, 4)
-
-                if hint_type == 1:
-
-                    if number % 2 == 0:
-                        print(
-                            "The number is EVEN."
-                        )
-                    else:
-                        print(
-                            "The number is ODD."
-                        )
-
-                elif hint_type == 2:
-
-                    if number <= maximum // 2:
-                        print(
-                            "The number is in the "
-                            "LOWER half."
-                        )
-                    else:
-                        print(
-                            "The number is in the "
-                            "UPPER half."
-                        )
-
-                elif hint_type == 3:
-
-                    lower_range = max(
-                        1,
-                        number - 20
-                    )
-
-                    upper_range = min(
-                        maximum,
-                        number + 20
-                    )
-
-                    print(
-                        "The number is between",
-                        lower_range,
-                        "and",
-                        upper_range
-                    )
-
-                else:
-
-                    if number > guess:
-
-                        print(
-                            "The number is higher "
-                            "than your guess."
-                        )
-
-                    else:
-
-                        print(
-                            "The number is lower "
-                            "than your guess."
-                        )
+                give_smart_hint(
+                    number,
+                    maximum,
+                    guess
+                )
 
                 print(
                     "Hint penalty: -10 points"
@@ -669,10 +1343,18 @@ def play_game(maximum, max_attempts, difficulty):
         print("          GAME OVER")
         print("================================")
 
-        print("You ran out of attempts.")
-        print("The correct number was:", number)
+        print(
+            "You ran out of attempts."
+        )
 
-        print("\nBetter luck next time!")
+        print(
+            "The correct number was:",
+            number
+        )
+
+        print(
+            "\nBetter luck next time!"
+        )
 
         print("\nYour guesses:")
         print(guess_history)
@@ -680,12 +1362,139 @@ def play_game(maximum, max_attempts, difficulty):
         win_streak = 0
 
         game_history.append({
+
             "difficulty": difficulty,
             "result": "Lost",
             "attempts": attempts,
             "score": 0,
+            "rating": "Failed",
             "guesses": guess_history.copy()
+
         })
+
+    # ==========================================
+    # PLAY AGAIN
+    # ==========================================
+
+    play_again_choice = play_again()
+
+    if play_again_choice:
+
+        print(
+            "\nReturning to the main menu..."
+        )
+
+    else:
+
+        print(
+            "\nReturning to the main menu..."
+        )
+
+
+# ==========================================
+# FINAL STATISTICS
+# ==========================================
+
+def show_final_statistics():
+
+    print("\n================================")
+    print("       FINAL STATISTICS")
+    print("================================")
+
+    print("Player:", player_name)
+
+    print(
+        "Games played:",
+        games_played
+    )
+
+    print(
+        "Games won:",
+        games_won
+    )
+
+    if games_played > 0:
+
+        win_rate = (
+            games_won /
+            games_played
+        ) * 100
+
+        print(
+            "Win rate:",
+            round(win_rate, 2),
+            "%"
+        )
+
+    else:
+
+        print("Win rate: 0%")
+
+    print(
+        "Total score:",
+        total_score
+    )
+
+    print(
+        "Longest win streak:",
+        longest_streak
+    )
+
+    print(
+        "Total hints used:",
+        hints_used
+    )
+
+    print("\nBest Scores")
+    print("--------------------------------")
+
+    print(
+        "Easy:",
+        best_scores["Easy"]
+    )
+
+    print(
+        "Medium:",
+        best_scores["Medium"]
+    )
+
+    print(
+        "Hard:",
+        best_scores["Hard"]
+    )
+
+    print("\nAchievements")
+
+    print("--------------------------------")
+
+    if len(achievements) == 0:
+
+        print("None")
+
+    else:
+
+        for achievement in achievements:
+
+            print(
+                "-",
+                achievement
+            )
+
+    print("\n================================")
+
+    print(
+        "Thank you for playing,"
+        , player_name + "!"
+    )
+
+    print("================================")
+
+
+# ==========================================
+# START PLAYER PROFILE
+# ==========================================
+
+setup_player()
 
 
 # ==========================================
@@ -698,18 +1507,62 @@ while True:
     print("      NUMBER GUESSING GAME")
     print("================================")
 
-    print("1. Easy   (1-50, 10 attempts)")
-    print("2. Medium (1-100, 7 attempts)")
-    print("3. Hard   (1-500, 10 attempts)")
-    print("4. Custom Game")
-    print("5. Statistics")
-    print("6. Game History")
-    print("7. Leaderboard")
-    print("8. Exit")
+    print(
+        "Player:",
+        player_name
+    )
 
     print("================================")
 
-    choice = input("Choose an option: ")
+    print(
+        "1. Easy   (1-50, 10 attempts)"
+    )
+
+    print(
+        "2. Medium (1-100, 7 attempts)"
+    )
+
+    print(
+        "3. Hard   (1-500, 10 attempts)"
+    )
+
+    print(
+        "4. Custom Game"
+    )
+
+    print(
+        "5. Statistics"
+    )
+
+    print(
+        "6. Game History"
+    )
+
+    print(
+        "7. Leaderboard"
+    )
+
+    print(
+        "8. Achievements"
+    )
+
+    print(
+        "9. Player Profile"
+    )
+
+    print(
+        "10. Recent Games"
+    )
+
+    print(
+        "11. Exit"
+    )
+
+    print("================================")
+
+    choice = input(
+        "Choose an option: "
+    )
 
     # ==========================================
     # EASY
@@ -780,73 +1633,36 @@ while True:
         show_leaderboard()
 
     # ==========================================
-    # EXIT
+    # ACHIEVEMENTS
     # ==========================================
 
     elif choice == "8":
 
-        print("\n================================")
-        print("       FINAL STATISTICS")
-        print("================================")
+        show_achievements()
 
-        print("Games played:", games_played)
-        print("Games won:", games_won)
+    # ==========================================
+    # PROFILE
+    # ==========================================
 
-        if games_played > 0:
+    elif choice == "9":
 
-            win_rate = (
-                games_won /
-                games_played
-            ) * 100
+        show_profile()
 
-            print(
-                "Win rate:",
-                round(win_rate, 2),
-                "%"
-            )
+    # ==========================================
+    # RECENT GAMES
+    # ==========================================
 
-        print(
-            "Longest win streak:",
-            longest_streak
-        )
+    elif choice == "10":
 
-        print(
-            "Total hints used:",
-            hints_used
-        )
+        show_recent_games()
 
-        print("\nBest Scores")
-        print("--------------------------------")
+    # ==========================================
+    # EXIT
+    # ==========================================
 
-        print(
-            "Easy:",
-            best_scores["Easy"]
-        )
+    elif choice == "11":
 
-        print(
-            "Medium:",
-            best_scores["Medium"]
-        )
-
-        print(
-            "Hard:",
-            best_scores["Hard"]
-        )
-
-        print("\nAchievements")
-
-        if len(achievements) == 0:
-
-            print("None")
-
-        else:
-
-            for achievement in achievements:
-
-                print("-", achievement)
-
-        print("\nThank you for playing!")
-        print("================================")
+        show_final_statistics()
 
         break
 
@@ -858,5 +1674,5 @@ while True:
 
         print(
             "Invalid choice. "
-            "Please select 1-8."
+            "Please select 1-11."
         )
