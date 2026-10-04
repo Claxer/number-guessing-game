@@ -4,7 +4,7 @@ A simple **Python-based Number Guessing Game** that challenges the player to gue
 
 The player can choose between **Easy, Medium, Hard, and Custom Game** modes. Each difficulty has a different number range and number of attempts. The game provides hints by telling the player if their guess is **too high, too low, hot, cold, closer, or farther** from the secret number.
 
-The game also includes a **scoring system, best scores, best attempts, guess history, duplicate guess detection, accuracy tracking, win streaks, difficulty bonuses, hint penalties, statistics, achievements, game history, leaderboard, input validation, limited attempts, and a quit-game option**.
+The game also includes a **scoring system, difficulty bonuses, hint penalties, win streaks, achievements, player profiles, smart hints, game history, recent games, leaderboards, performance ratings, best scores, best attempts, guess analysis, input validation, limited attempts, and a quit-game option**.
 
 This project was created as a beginner-friendly Python project to practice **variables, user input, conditional statements, loops, lists, dictionaries, functions, exception handling, the random module, calculations, and basic game logic**.
 
@@ -12,6 +12,7 @@ This project was created as a beginner-friendly Python project to practice **var
 
 ## Features
 
+* Player name and profile
 * Easy difficulty
 * Medium difficulty
 * Hard difficulty
@@ -24,15 +25,24 @@ This project was created as a beginner-friendly Python project to practice **var
 * Hot and cold hints
 * Closer and farther hints
 * Even or odd hints
-* Lower-half or upper-half hints
+* Prime number detection
+* Prime number hints
+* Upper-half or lower-half hints
 * Smaller number range hints
-* Optional hint system
+* Divisibility hints
+* Higher or lower hints
+* Smart hint system
+* Optional hints
 * Hint score penalties
 * Score system
 * Difficulty-based score bonuses
 * Win streak score bonuses
-* Separate best scores
-* Best attempts tracking
+* Lucky guess bonus
+* Performance rating
+* Best scores
+* Best attempts
+* Overall best score
+* Overall fewest attempts
 * Guess history
 * Duplicate guess detection
 * Guess analysis
@@ -45,20 +55,113 @@ This project was created as a beginner-friendly Python project to practice **var
 * Longest win streak
 * Total hints used
 * Game history
+* Recent games
 * Leaderboard
 * Achievement system
-* Perfect Guess achievement
+* Achievement progress
 * First Win achievement
+* Perfect Guess achievement
 * No Hints Used achievement
 * 5 Win Streak achievement
+* 10 Win Streak achievement
+* Score Master achievement
+* Lucky Guess achievement
+* Hard Mode Winner achievement
+* Custom Champion achievement
+* Guessing Master achievement
 * Input validation
 * Invalid number protection
 * Limited attempts
 * Quit current game option
-* Statistics menu
+* Game summary
 * Final statistics
 * Terminal-based interface
 * Beginner-friendly Python code
+
+---
+
+## Main Menu
+
+The current version provides **11 menu options**:
+
+```text
+================================
+      NUMBER GUESSING GAME
+================================
+Player: Player
+
+================================
+1. Easy   (1-50, 10 attempts)
+2. Medium (1-100, 7 attempts)
+3. Hard   (1-500, 10 attempts)
+4. Custom Game
+5. Statistics
+6. Game History
+7. Leaderboard
+8. Achievements
+9. Player Profile
+10. Recent Games
+11. Exit
+================================
+```
+
+The player can select a difficulty, create a custom game, view statistics, review game history, check the leaderboard, view achievements, check their player profile, view recent games, or exit the program.
+
+---
+
+## Player Profile
+
+When the program starts, the player is asked to enter their name.
+
+Example:
+
+```text
+================================
+       PLAYER PROFILE
+================================
+Enter your name: Jose
+
+Welcome, Jose!
+Your game profile has been created.
+```
+
+The player's name is then displayed throughout the program.
+
+The Player Profile menu displays information such as:
+
+* Player name
+* Games played
+* Games won
+* Win rate
+* Current win streak
+* Longest win streak
+* Total score
+* Total hints used
+* Achievements unlocked
+* Best game score
+* Best game attempts
+
+Example:
+
+```text
+================================
+         PLAYER PROFILE
+================================
+
+Player: Jose
+Games played: 10
+Games won: 7
+Win rate: 70.0 %
+Current win streak: 3
+Longest win streak: 5
+Total score: 850
+Total hints used: 6
+Achievements unlocked: 5
+Best game score: 150
+Best game attempts: 1
+
+================================
+```
 
 ---
 
@@ -66,12 +169,12 @@ This project was created as a beginner-friendly Python project to practice **var
 
 The game includes three standard difficulty levels and one custom mode.
 
-| Difficulty | Number Range   | Attempts       | Difficulty Bonus |
-| ---------- | -------------- | -------------- | ---------------- |
-| Easy       | 1-50           | 10             | +0               |
-| Medium     | 1-100          | 7              | +20              |
-| Hard       | 1-500          | 10             | +40              |
-| Custom     | Player chooses | Player chooses | +30              |
+| Difficulty |   Number Range |       Attempts | Difficulty Bonus |
+| ---------- | -------------: | -------------: | ---------------: |
+| Easy       |           1-50 |             10 |               +0 |
+| Medium     |          1-100 |              7 |              +20 |
+| Hard       |          1-500 |             10 |              +40 |
+| Custom     | Player chooses | Player chooses |              +30 |
 
 ### Easy
 
@@ -92,12 +195,13 @@ The player can create their own game by choosing:
 * Maximum number
 * Number of attempts
 
-For example:
+Example:
 
 ```text
 ================================
         CUSTOM GAME
 ================================
+
 Enter maximum number: 1000
 Enter number of attempts: 15
 ```
@@ -106,34 +210,15 @@ This allows the player to create a more personalized challenge.
 
 ---
 
-## Main Menu
-
-The current version provides the following main menu:
-
-```text
-================================
-      NUMBER GUESSING GAME
-================================
-1. Easy   (1-50, 10 attempts)
-2. Medium (1-100, 7 attempts)
-3. Hard   (1-500, 10 attempts)
-4. Custom Game
-5. Statistics
-6. Game History
-7. Leaderboard
-8. Exit
-================================
-```
-
-The player can choose a standard difficulty, create a custom game, view statistics, view previous games, view the leaderboard, or exit.
-
----
-
 ## How the Game Works
 
-The program starts by displaying the main menu.
+The program first asks the player for their name.
 
-The player selects a game mode. The program then determines the number range and maximum attempts.
+The main menu is then displayed.
+
+The player selects a game mode.
+
+The program determines the number range and maximum number of attempts.
 
 A secret number is randomly generated using Python's `random` module.
 
@@ -141,60 +226,77 @@ The player enters guesses until they:
 
 1. Guess the correct number
 2. Run out of attempts
-3. Quit the current game
+3. Enter `0` to quit the current game
 
-The program provides different hints and feedback throughout the game.
+The program provides different feedback and hints during the game.
 
 ---
 
 ## Game Flow
 
 ```text
+Start Program
+     |
+     v
+Enter Player Name
+     |
+     v
 Main Menu
-    |
-    v
-Choose Option
-    |
-    +---- Statistics ------> Display Statistics
-    |
-    +---- Game History ----> Display Game History
-    |
-    +---- Leaderboard -----> Display Leaderboard
-    |
-    +---- Exit ------------> End Program
-    |
-    v
-Select Difficulty
-    |
-    v
+     |
+     +---- Easy
+     |
+     +---- Medium
+     |
+     +---- Hard
+     |
+     +---- Custom Game
+     |
+     +---- Statistics
+     |
+     +---- Game History
+     |
+     +---- Leaderboard
+     |
+     +---- Achievements
+     |
+     +---- Player Profile
+     |
+     +---- Recent Games
+     |
+     +---- Exit
+     |
+     v
+Select Game
+     |
+     v
 Set Number Range
-    |
-    v
+     |
+     v
 Set Attempt Limit
-    |
-    v
+     |
+     v
 Generate Random Number
-    |
-    v
+     |
+     v
 Enter Guess
-    |
-    v
+     |
+     v
 Validate Input
-    |
-    +---- Invalid ---------> Try Again
-    |
-    +---- Duplicate -------> Try Again
-    |
-    +---- 0 ---------------> Quit Game
-    |
-    v
+     |
+     +---- Invalid -------> Try Again
+     |
+     +---- Duplicate -----> Try Again
+     |
+     +---- 0 -------------> Quit Game
+     |
+     v
 Check Guess
-    |
-    +---- Too Low ---------> Give Hint
-    |
-    +---- Too High --------> Give Hint
-    |
-    +---- Correct ---------> Calculate Score
+     |
+     +---- Too Low -------> Give Feedback
+     |
+     +---- Too High ------> Give Feedback
+     |
+     +---- Correct --------> Calculate Score
                                   |
                                   v
                            Update Statistics
@@ -203,10 +305,13 @@ Check Guess
                            Check Achievements
                                   |
                                   v
-                            Save Game History
+                           Update Records
                                   |
                                   v
-                             Show Results
+                           Save Game History
+                                  |
+                                  v
+                            Show Summary
                                   |
                                   v
                               Main Menu
@@ -228,47 +333,94 @@ The score decreases by **10 points for every additional attempt**.
 5 attempts = 60 points
 ```
 
-The game also provides difficulty bonuses.
+Difficulty bonuses are then added.
 
 ```text
-Easy   = +0 points
-Medium = +20 points
-Hard   = +40 points
-Custom = +30 points
+Easy   = +0
+Medium = +20
+Hard   = +40
+Custom = +30
 ```
 
-### Hint Penalty
+---
 
-Using a hint reduces the score by **10 points**.
+## Hint Penalty
+
+Using an optional hint reduces the player's score by **10 points**.
 
 ```text
 Hint penalty: -10 points
 ```
 
-This encourages players to solve the game using fewer hints.
+Example:
 
-### Win Streak Bonus
+```text
+Base Score: 100
+Hint Used: -10
+Final Score: 90
+```
 
-Players can also receive additional points based on their current win streak.
+This encourages players to solve the game with fewer hints.
 
-The longer the win streak, the greater the possible streak bonus.
+---
 
-### Minimum Score
+## Win Streak Bonus
 
-The game prevents the score from becoming lower than **10 points**.
+The game tracks consecutive wins.
+
+Players receive additional score bonuses based on their current win streak.
+
+The longer the player's streak, the greater the possible streak bonus.
+
+Example:
+
+```text
+Current win streak: 3
+
+Streak bonus:
+3 x 5 = +15 points
+```
+
+If the player loses or quits a game, the current win streak resets to zero.
+
+---
+
+## Lucky Guess Bonus
+
+If the player guesses the correct number on their **first attempt**, they receive a special bonus.
+
+```text
+LUCKY GUESS BONUS: +50
+```
+
+The player also unlocks the:
+
+```text
+Lucky Guess
+```
+
+achievement.
+
+---
+
+## Minimum Score
+
+The program prevents a successful game from having a score below **10 points**.
 
 ```python
 if score < 10:
     score = 10
 ```
 
+This ensures that a player who wins still receives some points.
+
 ---
 
-## Hint System
+## Smart Hint System
 
-The new version includes an optional hint system.
+The game includes a smart hint system.
 
-After making valid guesses, the player can choose whether to request a hint.
+After making at least two valid guesses, the player can choose:
 
 ```text
 Would you like a hint? (yes/no):
@@ -276,66 +428,127 @@ Would you like a hint? (yes/no):
 
 If the player chooses `yes`, the program randomly selects one of several hint types.
 
-### Even or Odd Hint
+---
 
-The program can tell whether the secret number is even or odd.
+## Even or Odd Hint
+
+The game can tell whether the secret number is even or odd.
+
+Example:
 
 ```text
-HINT
-The number is EVEN.
+SMART HINT
+--------------------------------
+The secret number is EVEN.
+--------------------------------
 ```
 
-or:
+The program checks:
 
-```text
-HINT
-The number is ODD.
+```python
+number % 2
 ```
 
-### Upper or Lower Half
+---
 
-The program can indicate whether the secret number is in the upper or lower half of the number range.
+## Prime Number Hint
+
+The program can determine whether the secret number is a prime number.
+
+Example:
 
 ```text
-HINT
+SMART HINT
+--------------------------------
+The secret number is a PRIME number.
+--------------------------------
+```
+
+The program uses the `is_prime()` function to determine whether the number is prime.
+
+---
+
+## Upper or Lower Half Hint
+
+The program can tell whether the secret number is in the upper or lower half of the selected range.
+
+Example:
+
+```text
+SMART HINT
+--------------------------------
 The number is in the UPPER half.
+--------------------------------
 ```
 
-### Number Range Hint
+---
+
+## Divisibility Hint
+
+The program can randomly select a number such as:
+
+```text
+3
+5
+10
+```
+
+It then checks whether the secret number is divisible by that number.
+
+Example:
+
+```text
+SMART HINT
+--------------------------------
+The number is divisible by 5.
+--------------------------------
+```
+
+---
+
+## Number Range Hint
 
 The program can provide a smaller range around the secret number.
 
-```text
-HINT
-The number is between 120 and 170
-```
-
-### Higher or Lower Hint
-
-The program can directly indicate whether the secret number is higher or lower than the player's current guess.
+Example:
 
 ```text
-The number is higher than your guess.
+SMART HINT
+--------------------------------
+The number is between 120 and 150.
+--------------------------------
 ```
 
-Every optional hint used during a successful game applies a **10-point score penalty**.
+This helps narrow down the possible answer.
+
+---
+
+## Higher or Lower Hint
+
+The program can tell the player whether the secret number is higher or lower than their current guess.
+
+Example:
+
+```text
+The secret number is HIGHER than your guess.
+```
 
 ---
 
 ## Hot and Cold System
 
-The game now provides a **Hot/Cold system** based on the distance between the player's guess and the secret number.
+The game provides a **Hot/Cold system** based on the distance between the player's guess and the secret number.
 
-The program calculates the difference using:
+The distance is calculated using:
 
 ```python
 difference = abs(number - guess)
 ```
 
-Depending on the distance, the player may receive messages such as:
+Depending on the distance, the player receives different feedback.
 
 ```text
-VERY HOT! You are extremely close.
+🔥 VERY HOT! You are extremely close.
 ```
 
 ```text
@@ -350,60 +563,58 @@ Warm. You are getting closer.
 Cold. You are far from the number.
 ```
 
-This gives the player another way to understand how close their guess is.
+This gives the player additional information without directly revealing the answer.
 
 ---
 
 ## Closer and Farther System
 
-The game compares the current guess with the previous guess.
+The game compares the current guess with the player's previous guess.
 
-If the new guess is closer to the secret number:
+If the new guess is closer:
 
 ```text
 You are getting CLOSER!
 ```
 
-If the new guess is farther away:
+If the new guess is farther:
 
 ```text
 You are getting FARTHER!
 ```
 
-If both guesses are the same distance from the secret number:
+If both guesses have the same distance:
 
 ```text
 You are the same distance from the number.
 ```
 
-This feature uses the difference between the guess and the secret number.
+This makes the guessing process more interactive.
 
 ---
 
 ## Guess History
 
-The program stores all valid guesses in a list.
+All valid guesses are stored in a list.
 
 ```python
 guess_history = []
 ```
 
-Every valid guess is added using:
+Each valid guess is added using:
 
 ```python
 guess_history.append(guess)
 ```
 
-At the end of the game, the player can see their guesses.
-
 Example:
 
 ```text
 Your guesses:
-[50, 75, 60, 64]
+[50, 75, 64]
 ```
 
-This allows the player to review their guessing pattern.
+The player can use the guess history to review their previous attempts.
 
 ---
 
@@ -420,7 +631,619 @@ if guess in guess_history:
 
 A duplicate guess does not use an attempt.
 
-This allows the player to continue using new guesses without being unnecessarily penalized.
+---
+
+## Guess Analysis
+
+After winning, the game analyzes the player's guesses.
+
+It displays:
+
+* Lowest guess
+* Highest guess
+* Average guess
+
+Example:
+
+```text
+Guess Analysis
+--------------------------------
+Lowest guess: 50
+Highest guess: 75
+Average guess: 63.0
+
+Your guesses:
+[50, 75, 64]
+```
+
+The program uses:
+
+```python
+min(guess_history)
+```
+
+```python
+max(guess_history)
+```
+
+and:
+
+```python
+sum(guess_history)
+```
+
+to calculate the results.
+
+---
+
+## Performance Rating
+
+After winning, the game evaluates the player's performance.
+
+Possible ratings include:
+
+```text
+LEGENDARY
+EXCELLENT
+GREAT
+GOOD
+DECENT
+NEEDS IMPROVEMENT
+```
+
+The rating is based on the number of attempts and final score.
+
+Example:
+
+```text
+Your score: 150
+Performance: LEGENDARY
+```
+
+---
+
+## Game Summary
+
+After successfully guessing the number, the program displays a game summary.
+
+Example:
+
+```text
+================================
+         GAME SUMMARY
+================================
+
+Player: Jose
+Result: WIN
+Secret number: 64
+Attempts: 3
+Score: 100
+Performance: EXCELLENT
+Current streak: 3
+Guess accuracy: 33.33 %
+
+Guess Analysis
+--------------------------------
+Lowest guess: 50
+Highest guess: 75
+Average guess: 63.0
+
+Your guesses:
+[50, 75, 64]
+
+================================
+```
+
+This provides the player with a complete overview of their performance.
+
+---
+
+## Player Statistics
+
+The Statistics menu displays the player's overall performance during the current session.
+
+The statistics include:
+
+* Games played
+* Games won
+* Win rate
+* Current win streak
+* Longest win streak
+* Total score
+* Total hints used
+* Average attempts per win
+* Average score
+* Best scores
+* Best attempts
+* Achievements
+
+Example:
+
+```text
+================================
+          STATISTICS
+================================
+
+Games played: 10
+Games won: 7
+Win rate: 70.0 %
+Current win streak: 3
+Longest win streak: 5
+Total score: 850
+Total hints used: 6
+
+Average attempts per win: 3.14
+Average score: 121.43
+
+Best Scores
+--------------------------------
+Easy: 100
+Medium: 120
+Hard: 155
+
+Best Attempts
+--------------------------------
+Easy: 1
+Medium: 2
+Hard: 3
+================================
+```
+
+---
+
+## Win Rate
+
+The program calculates the player's win rate using:
+
+```python
+win_rate = (games_won / games_played) * 100
+```
+
+Example:
+
+```text
+Games played: 10
+Games won: 7
+Win rate: 70.0 %
+```
+
+---
+
+## Average Attempts
+
+The game calculates the average number of attempts used during successful games.
+
+```python
+average_attempts = total_attempts / games_won
+```
+
+Example:
+
+```text
+Average attempts per win: 3.14
+```
+
+---
+
+## Average Score
+
+The game calculates the average score earned from successful games.
+
+```python
+average_score = total_score / games_won
+```
+
+Example:
+
+```text
+Average score: 121.43
+```
+
+---
+
+## Win Streak
+
+The game keeps track of consecutive wins.
+
+After a successful game:
+
+```python
+win_streak += 1
+```
+
+After losing or quitting:
+
+```python
+win_streak = 0
+```
+
+The program also records the longest streak:
+
+```python
+if win_streak > longest_streak:
+    longest_streak = win_streak
+```
+
+---
+
+## Best Scores
+
+The program stores separate best scores for the standard difficulties.
+
+```python
+best_scores = {
+    "Easy": None,
+    "Medium": None,
+    "Hard": None
+}
+```
+
+Example:
+
+```text
+Best Scores
+--------------------------------
+Easy: 100
+Medium: 120
+Hard: 155
+```
+
+A new record is created when the player earns a higher score.
+
+---
+
+## Best Attempts
+
+The program also stores the fewest attempts used for each standard difficulty.
+
+```python
+best_attempts = {
+    "Easy": None,
+    "Medium": None,
+    "Hard": None
+}
+```
+
+Example:
+
+```text
+Best Attempts
+--------------------------------
+Easy: 1
+Medium: 2
+Hard: 3
+```
+
+A lower number of attempts becomes the new record.
+
+---
+
+## Overall Records
+
+The game also keeps track of:
+
+* Highest game score
+* Fewest attempts in any game
+
+Example:
+
+```text
+OVERALL RECORDS
+--------------------------------
+Highest game score: 155
+Fewest attempts: 1
+```
+
+These records are separate from the difficulty-specific records.
+
+---
+
+## Game History
+
+Every completed game is stored in `game_history`.
+
+The program records information such as:
+
+* Difficulty
+* Result
+* Attempts
+* Score
+* Performance rating
+* Guesses
+
+Example:
+
+```text
+================================
+          GAME HISTORY
+================================
+
+Game 1
+Difficulty: Medium
+Result: Won
+Attempts: 3
+Score: 100
+Performance: EXCELLENT
+Guesses: [50, 75, 64]
+
+--------------------------------
+
+Game 2
+Difficulty: Hard
+Result: Lost
+Attempts: 10
+Score: 0
+Performance: Failed
+Guesses: [100, 200, 300, 400]
+```
+
+---
+
+## Recent Games
+
+The Recent Games feature displays the latest **five games**.
+
+This provides a quick way for the player to review their most recent performance without displaying the entire game history.
+
+Example:
+
+```text
+================================
+         RECENT GAMES
+================================
+
+Game 1
+Difficulty: Easy
+Result: Won
+Attempts: 2
+Score: 105
+Performance: GREAT
+
+--------------------------------
+```
+
+---
+
+## Leaderboard
+
+The Leaderboard displays the player's current records.
+
+It includes:
+
+* Best score for Easy
+* Best score for Medium
+* Best score for Hard
+* Fewest attempts per difficulty
+* Overall best score
+* Overall fewest attempts
+* Longest win streak
+
+Example:
+
+```text
+================================
+          LEADERBOARD
+================================
+
+BEST SCORES
+--------------------------------
+Easy: 100
+Medium: 120
+Hard: 155
+
+FEWEST ATTEMPTS
+--------------------------------
+Easy: 1
+Medium: 2
+Hard: 3
+
+OVERALL RECORDS
+--------------------------------
+Highest game score: 155
+Fewest attempts: 1
+
+LONGEST WIN STREAK
+--------------------------------
+5
+================================
+```
+
+---
+
+## Achievement System
+
+The game includes an achievement system that rewards different accomplishments.
+
+Achievements are stored in:
+
+```python
+achievements = []
+```
+
+An achievement is only unlocked once.
+
+---
+
+### First Win
+
+Unlocked after winning the first game.
+
+```text
+*** ACHIEVEMENT UNLOCKED: First Win ***
+```
+
+---
+
+### Perfect Guess
+
+Unlocked when the correct number is guessed on the first attempt.
+
+```text
+*** ACHIEVEMENT UNLOCKED: Perfect Guess ***
+```
+
+---
+
+### No Hints Used
+
+Unlocked when the player wins without using any hints.
+
+```text
+*** ACHIEVEMENT UNLOCKED: No Hints Used ***
+```
+
+---
+
+### 5 Win Streak
+
+Unlocked after five consecutive wins.
+
+```text
+*** ACHIEVEMENT UNLOCKED: 5 Win Streak ***
+```
+
+---
+
+### 10 Win Streak
+
+Unlocked after ten consecutive wins.
+
+```text
+*** ACHIEVEMENT UNLOCKED: 10 Win Streak ***
+```
+
+---
+
+### Score Master
+
+Unlocked after achieving a high score of at least 150 points.
+
+```text
+*** ACHIEVEMENT UNLOCKED: Score Master ***
+```
+
+---
+
+### Lucky Guess
+
+Unlocked when the player guesses the correct number on the first attempt.
+
+```text
+*** ACHIEVEMENT UNLOCKED: Lucky Guess ***
+```
+
+---
+
+### Hard Mode Winner
+
+Unlocked after winning a Hard difficulty game.
+
+```text
+*** ACHIEVEMENT UNLOCKED: Hard Mode Winner ***
+```
+
+---
+
+### Custom Champion
+
+Unlocked after winning a Custom Game.
+
+```text
+*** ACHIEVEMENT UNLOCKED: Custom Champion ***
+```
+
+---
+
+### Guessing Master
+
+Unlocked after winning at least ten games.
+
+```text
+*** ACHIEVEMENT UNLOCKED: Guessing Master ***
+```
+
+---
+
+## Achievement Progress
+
+The Achievements menu shows which achievements have been unlocked and which are still locked.
+
+Example:
+
+```text
+================================
+          ACHIEVEMENTS
+================================
+
+Unlocked: 5 / 10
+
+--------------------------------
+
+[UNLOCKED] First Win
+[UNLOCKED] Perfect Guess
+[UNLOCKED] No Hints Used
+[LOCKED] 5 Win Streak
+[LOCKED] 10 Win Streak
+[UNLOCKED] Score Master
+[UNLOCKED] Lucky Guess
+[LOCKED] Hard Mode Winner
+[LOCKED] Custom Champion
+[LOCKED] Guessing Master
+
+================================
+```
+
+---
+
+## Input Validation
+
+The program uses `try` and `except` to prevent invalid input from crashing the game.
+
+```python
+try:
+    guess = int(input("Enter your guess: "))
+
+except ValueError:
+    print("Please enter a valid number.")
+```
+
+If the player enters text instead of a number, the program displays an error message.
+
+The program also checks whether the guess is inside the allowed range.
+
+Example:
+
+```text
+Please enter a number between 1 and 50
+```
+
+Invalid inputs do not use an attempt.
+
+---
+
+## Attempt System
+
+Each difficulty has a different number of attempts.
+
+The attempt counter starts at:
+
+```python
+attempts = 0
+```
+
+Each valid and unique guess increases the counter:
+
+```python
+attempts += 1
+```
+
+The guessing loop continues while:
+
+```python
+while attempts < max_attempts:
+```
+
+Invalid inputs and duplicate guesses do not use an attempt.
 
 ---
 
@@ -440,7 +1263,7 @@ Enter your guess: 0
 You left the current game.
 ```
 
-When the player quits, the game is recorded in the game history as:
+The game is then saved in the game history with:
 
 ```text
 Result: Quit
@@ -450,177 +1273,35 @@ The current win streak is also reset.
 
 ---
 
-## Guess Analysis
+## Game Over
 
-When the player wins, the program analyzes the guesses used during the game.
-
-It displays:
-
-* Lowest guess
-* Highest guess
-* Average guess
-
-Example:
-
-```text
-Guess Analysis
-Lowest guess: 50
-Highest guess: 75
-Average guess: 64.75
-```
-
-The program uses Python functions such as:
-
-```python
-min(guess_history)
-max(guess_history)
-sum(guess_history)
-```
-
-This gives the player more information about their guessing behavior.
-
----
-
-## Statistics
-
-The Statistics menu displays the player's overall performance during the current program session.
+If the player uses all available attempts without guessing correctly, the game ends.
 
 Example:
 
 ```text
 ================================
-          STATISTICS
+          GAME OVER
 ================================
-Games played: 5
-Games won: 4
-Win rate: 80.0 %
-Current win streak: 2
-Longest win streak: 3
-Average attempts per win: 3.25
-Average score: 96.5
 
-Best Scores
---------------------------------
-Easy: 100
-Medium: 110
-Hard: 130
+You ran out of attempts.
+The correct number was: 347
 
-Best Attempts
---------------------------------
-Easy: 2
-Medium: 3
-Hard: 4
+Better luck next time!
 
-Achievements
---------------------------------
-- First Win
-- Perfect Guess
-- No Hints Used
-================================
+Your guesses:
+[100, 200, 250, 300, 320, 330, 340, 345, 346, 348]
 ```
+
+The game is saved in the history as a lost game.
 
 ---
 
-## Games Played
+## Data Storage
 
-The program counts the number of games started.
+The program uses lists and dictionaries to store information while it is running.
 
-```python
-games_played += 1
-```
-
-This value is used for calculating the player's overall win rate.
-
----
-
-## Games Won
-
-Whenever the player correctly guesses the secret number:
-
-```python
-games_won += 1
-```
-
-The games won value is used to calculate the player's performance.
-
----
-
-## Win Rate
-
-The program calculates the win rate using:
-
-```python
-win_rate = (games_won / games_played) * 100
-```
-
-For example:
-
-```text
-Games played: 5
-Games won: 4
-Win rate: 80.0 %
-```
-
----
-
-## Average Attempts
-
-The program calculates the average number of attempts used during successful games.
-
-```python
-average_attempts = total_attempts / games_won
-```
-
-Example:
-
-```text
-Average attempts per win: 3.25
-```
-
----
-
-## Average Score
-
-The program also keeps track of the total score earned from successful games.
-
-The average score is calculated using:
-
-```python
-average_score = total_score / games_won
-```
-
-This gives the player another way to measure their performance.
-
----
-
-## Win Streak
-
-The game tracks consecutive wins.
-
-After a successful game:
-
-```python
-win_streak += 1
-```
-
-If the player loses or quits:
-
-```python
-win_streak = 0
-```
-
-The program also stores the longest win streak:
-
-```python
-if win_streak > longest_streak:
-    longest_streak = win_streak
-```
-
----
-
-## Best Scores
-
-The program stores a separate best score for each standard difficulty.
+### Best Scores
 
 ```python
 best_scores = {
@@ -630,23 +1311,7 @@ best_scores = {
 }
 ```
 
-Example:
-
-```text
-Best Scores
---------------------------------
-Easy: 100
-Medium: 110
-Hard: 130
-```
-
-A new best score is recorded when the player's current score is higher than the previous record.
-
----
-
-## Best Attempts
-
-The program also tracks the fewest attempts used for each standard difficulty.
+### Best Attempts
 
 ```python
 best_attempts = {
@@ -656,230 +1321,89 @@ best_attempts = {
 }
 ```
 
-Example:
+### Guess History
 
-```text
-Best Attempts
---------------------------------
-Easy: 2
-Medium: 3
-Hard: 4
+```python
+guess_history = []
 ```
 
-A lower number of attempts becomes the new record.
+### Game History
 
----
-
-## Game History
-
-The new version stores information about games played during the current session.
-
-Each game can contain:
-
-* Difficulty
-* Result
-* Number of attempts
-* Score
-* Guess history
-
-Example:
-
-```text
-================================
-          GAME HISTORY
-================================
-
-Difficulty: Medium
-Result: Won
-Attempts: 4
-Score: 90
-Guesses: [50, 75, 60, 64]
-
---------------------------------
-
-Difficulty: Hard
-Result: Lost
-Attempts: 10
-Score: 0
-Guesses: [100, 200, 300, 400]
+```python
+game_history = []
 ```
 
-The game history is stored using a list of dictionaries.
-
----
-
-## Leaderboard
-
-The Leaderboard menu displays the player's best scores and fewest attempts.
-
-Example:
-
-```text
-================================
-          LEADERBOARD
-================================
-
-BEST SCORES
---------------------------------
-Easy: 100
-Medium: 110
-Hard: 130
-
-FEWEST ATTEMPTS
---------------------------------
-Easy: 2
-Medium: 3
-Hard: 4
-================================
-```
-
-The leaderboard is based on records from the current program session.
-
----
-
-## Achievement System
-
-The game now includes an achievement system.
-
-Achievements are stored in a list.
+### Achievements
 
 ```python
 achievements = []
 ```
 
-An achievement is only added if it has not already been unlocked.
-
-### First Win
-
-Unlocked after the player wins their first game.
-
-```text
-*** ACHIEVEMENT UNLOCKED: First Win ***
-```
-
-### Perfect Guess
-
-Unlocked when the player guesses the correct number on the first attempt.
-
-```text
-*** ACHIEVEMENT UNLOCKED: Perfect Guess ***
-```
-
-### No Hints Used
-
-Unlocked when the player wins without using hints.
-
-```text
-*** ACHIEVEMENT UNLOCKED: No Hints Used ***
-```
-
-### 5 Win Streak
-
-Unlocked after achieving five consecutive wins.
-
-```text
-*** ACHIEVEMENT UNLOCKED: 5 Win Streak ***
-```
-
-The achievement system gives the player additional goals while playing.
+These structures allow the program to organize player and game information.
 
 ---
 
-## Input Validation
-
-The program uses `try` and `except` to handle invalid input.
-
-```python
-try:
-    guess = int(input("Enter your guess: "))
-
-except ValueError:
-    print("Please enter a valid number.")
-```
-
-If the player enters text instead of a number, the program does not crash.
-
-It simply asks the player to enter a valid number.
-
-The program also checks whether the guess is within the selected range.
-
-Example:
+## Data Stored During the Game
 
 ```text
-Please enter a number between 1 and 50
+Game Data
+│
+├── Player Name
+│
+├── Difficulty
+│
+├── Secret Number
+│
+├── Maximum Number
+│
+├── Maximum Attempts
+│
+├── Current Attempts
+│
+├── Score
+│
+├── Guess History
+│
+├── Game History
+│   ├── Difficulty
+│   ├── Result
+│   ├── Attempts
+│   ├── Score
+│   ├── Performance
+│   └── Guesses
+│
+├── Statistics
+│   ├── Games Played
+│   ├── Games Won
+│   ├── Win Rate
+│   ├── Current Win Streak
+│   ├── Longest Win Streak
+│   ├── Average Attempts
+│   ├── Average Score
+│   └── Total Hints
+│
+├── Best Scores
+│
+├── Best Attempts
+│
+├── Overall Records
+│
+└── Achievements
 ```
 
-Invalid input does not use an attempt.
+The current version stores this information only during the current program session.
 
----
-
-## Attempt System
-
-Each difficulty has a different number of attempts.
-
-The attempt counter starts at:
-
-```python
-attempts = 0
-```
-
-Every valid and unique guess increases the counter:
-
-```python
-attempts += 1
-```
-
-The game continues while:
-
-```python
-while attempts < max_attempts:
-```
-
-Invalid inputs and duplicate guesses do not use an attempt.
-
----
-
-## Game Over
-
-If the player uses all available attempts without guessing the correct number, the game ends.
-
-Example:
-
-```text
-================================
-          GAME OVER
-================================
-You ran out of attempts.
-The correct number was: 347
-
-Better luck next time!
-```
-
-The player's guesses are also displayed.
-
-The current win streak is reset after losing.
-
----
-
-## Technologies Used
-
-* **Python**
-* **Random Module**
-* **Terminal / Command Prompt**
-* **PyCharm**
-* **Visual Studio Code**
-
-No external libraries are required.
+Closing the program resets the game history, statistics, leaderboard, and achievements.
 
 ---
 
 ## Python Concepts Used
 
-This project demonstrates several beginner-level Python programming concepts.
+This project demonstrates several fundamental Python programming concepts.
 
 ### Variables
 
-Variables store information such as the secret number, score, difficulty, attempts, and statistics.
+Variables store values such as the secret number, attempts, score, difficulty, and statistics.
 
 ```python
 number = random.randint(1, maximum)
@@ -889,7 +1413,7 @@ score = 100
 
 ### Lists
 
-Lists are used for guess history, game history, and achievements.
+Lists are used for storing guesses, game history, and achievements.
 
 ```python
 guess_history = []
@@ -899,7 +1423,7 @@ achievements = []
 
 ### Dictionaries
 
-Dictionaries store organized information such as best scores and game records.
+Dictionaries are used to organize information.
 
 ```python
 best_scores = {
@@ -909,7 +1433,7 @@ best_scores = {
 }
 ```
 
-Game history also uses dictionaries:
+Game records are also stored using dictionaries.
 
 ```python
 {
@@ -917,15 +1441,20 @@ Game history also uses dictionaries:
     "result": "Won",
     "attempts": attempts,
     "score": score,
+    "rating": rating,
     "guesses": guess_history.copy()
 }
 ```
 
 ### Functions
 
-The expanded version uses functions to separate different parts of the program.
+The project uses functions to separate different parts of the program.
 
 Examples include:
+
+```python
+def setup_player():
+```
 
 ```python
 def unlock_achievement(name):
@@ -944,26 +1473,26 @@ def show_leaderboard():
 ```
 
 ```python
+def show_achievements():
+```
+
+```python
 def custom_game():
 ```
 
 ```python
-def play_game(maximum, max_attempts, difficulty):
-```
-
-Functions make the code easier to organize, read, test, and explain.
-
-### User Input
-
-The `input()` function allows the player to interact with the game.
-
-```python
-choice = input("Choose an option: ")
+def calculate_score():
 ```
 
 ```python
-guess = int(input("Enter your guess: "))
+def update_records():
 ```
+
+```python
+def play_game():
+```
+
+Functions make the program easier to organize and maintain.
 
 ### Conditional Statements
 
@@ -984,13 +1513,11 @@ Conditional statements are also used for scoring, hints, achievements, validatio
 
 ### While Loops
 
-The game uses `while` loops to repeat the main menu and guessing process.
+The game uses `while` loops for the main menu and guessing process.
 
 ```python
 while True:
 ```
-
-and:
 
 ```python
 while attempts < max_attempts:
@@ -998,28 +1525,26 @@ while attempts < max_attempts:
 
 ### For Loops
 
-The program uses `for` loops when displaying achievements, game history, and leaderboard information.
-
-Example:
+`for` loops are used to display achievements, game history, and other stored information.
 
 ```python
 for achievement in achievements:
     print("-", achievement)
 ```
 
-### Random Number Generation
+### Random Module
 
-The secret number is generated using:
+The `random` module is used to generate the secret number.
 
 ```python
 number = random.randint(1, maximum)
 ```
 
-The maximum value changes according to the selected difficulty.
+It is also used to randomly select smart hints.
 
-### Try and Except
+### Exception Handling
 
-Exception handling prevents invalid input from crashing the program.
+The program uses `try` and `except` to handle invalid numerical input.
 
 ```python
 try:
@@ -1031,13 +1556,13 @@ except ValueError:
 
 ### Absolute Value
 
-The `abs()` function calculates the distance between the guess and the secret number.
+The `abs()` function determines the distance between the guess and the secret number.
 
 ```python
 difference = abs(number - guess)
 ```
 
-This is used by the Hot/Cold and Closer/Farther systems.
+This is used for the Hot/Cold system.
 
 ### Min and Max
 
@@ -1061,7 +1586,7 @@ sum(guess_history)
 
 ### Break
 
-The `break` statement is used to stop a loop when the game ends.
+The `break` statement stops a loop when the game or program ends.
 
 ```python
 break
@@ -1069,7 +1594,7 @@ break
 
 ### Continue
 
-The `continue` statement skips the current loop iteration when the input is invalid or duplicated.
+The `continue` statement skips the current loop iteration when input is invalid or duplicated.
 
 ```python
 continue
@@ -1079,61 +1604,23 @@ continue
 
 Arithmetic operators are used for score calculations, win rate, averages, streak bonuses, and hint penalties.
 
-Examples:
+Example:
 
 ```python
 score = 100 - ((attempts - 1) * 10)
 ```
 
-```python
-win_rate = (games_won / games_played) * 100
-```
-
 ---
 
-## Data Stored During the Game
+## Technologies Used
 
-The program stores several types of information while it is running.
+* **Python**
+* **Python Random Module**
+* **PyCharm**
+* **Visual Studio Code**
+* **Windows Terminal / Command Prompt**
 
-```text
-Game Data
-│
-├── Difficulty
-├── Secret Number
-├── Maximum Number
-├── Maximum Attempts
-├── Current Attempts
-├── Score
-│
-├── Guess History
-│
-├── Game History
-│   ├── Difficulty
-│   ├── Result
-│   ├── Attempts
-│   ├── Score
-│   └── Guesses
-│
-├── Statistics
-│   ├── Games Played
-│   ├── Games Won
-│   ├── Win Rate
-│   ├── Current Win Streak
-│   ├── Longest Win Streak
-│   ├── Average Attempts
-│   ├── Average Score
-│   └── Total Hints
-│
-├── Best Scores
-│
-├── Best Attempts
-│
-└── Achievements
-```
-
-The current version stores this information only while the program is running.
-
-Closing the program resets the statistics, leaderboard, game history, and achievements.
+No external Python libraries are required.
 
 ---
 
@@ -1146,6 +1633,18 @@ Number-Guessing-Game/
 └── README.md
 ```
 
+The main program is contained in:
+
+```text
+main.py
+```
+
+The documentation is contained in:
+
+```text
+README.md
+```
+
 ---
 
 ## How to Run
@@ -1154,7 +1653,7 @@ Number-Guessing-Game/
 
 Make sure Python is installed on your computer.
 
-Check the installed version by opening a terminal and running:
+Check the installed version:
 
 ```bash
 python --version
@@ -1168,7 +1667,7 @@ git clone https://github.com/your-username/Number-Guessing-Game.git
 
 ### 3. Open the Project
 
-Open the project folder using:
+Open the project using:
 
 * PyCharm
 * Visual Studio Code
@@ -1176,7 +1675,7 @@ Open the project folder using:
 
 ### 4. Run the Program
 
-Run:
+Open a terminal inside the project folder and run:
 
 ```bash
 python main.py
@@ -1190,6 +1689,10 @@ python main.py
 ================================
       NUMBER GUESSING GAME
 ================================
+
+Player: Jose
+
+================================
 1. Easy   (1-50, 10 attempts)
 2. Medium (1-100, 7 attempts)
 3. Hard   (1-500, 10 attempts)
@@ -1197,7 +1700,10 @@ python main.py
 5. Statistics
 6. Game History
 7. Leaderboard
-8. Exit
+8. Achievements
+9. Player Profile
+10. Recent Games
+11. Exit
 ================================
 
 Choose an option: 2
@@ -1205,15 +1711,18 @@ Choose an option: 2
 ================================
          GAME START
 ================================
+
+Player: Jose
 Difficulty: Medium
 Number range: 1 - 100
 Attempts: 7
 
-Type 0 at any time to quit the game.
+Type 0 at any time to quit this game.
 
 ================================
 
 Enter your guess: 50
+
 Too low!
 
 Cold. You are far from the number.
@@ -1221,6 +1730,7 @@ Cold. You are far from the number.
 Attempts remaining: 6
 
 Enter your guess: 75
+
 Too high!
 
 Hot! You are close.
@@ -1230,8 +1740,10 @@ Attempts remaining: 5
 
 Would you like a hint? (yes/no): yes
 
-HINT
-The number is EVEN.
+SMART HINT
+--------------------------------
+The secret number is EVEN.
+--------------------------------
 
 Hint penalty: -10 points
 
@@ -1246,56 +1758,88 @@ The number was: 64
 Attempts: 3
 
 Your score: 100
+Performance: EXCELLENT
+
+================================
+         GAME SUMMARY
+================================
+
+Player: Jose
+Result: WIN
+Secret number: 64
+Attempts: 3
+Score: 100
+Performance: EXCELLENT
+Current streak: 1
 
 Guess Analysis
+--------------------------------
 Lowest guess: 50
 Highest guess: 75
 Average guess: 63.0
 
 Your guesses:
 [50, 75, 64]
+
+================================
 ```
 
 ---
 
 ## Future Improvements
 
-Possible future features include:
+Possible future improvements include:
 
-* Save statistics to a file
+* Save player statistics to a file
 * Permanent high scores
-* Player name system
-* Multiple player support
+* Multiple player accounts
+* Multiplayer mode
 * Timer system
 * Countdown timer
 * Multiple rounds
-* Persistent scores
+* Persistent game history
 * More achievement types
 * More difficulty levels
-* More hint types
+* More smart hint types
 * Sound effects
 * Graphical user interface
-* Colorful terminal interface
+* Colored terminal interface
 * Database support
-* Persistent game history
 * Export statistics to a file
 * Online leaderboard
 * Player profiles
 * Difficulty-specific statistics
+* Save and load player progress
 
 ---
 
 ## Purpose
 
-This project was created for learning and practice while studying Python programming.
+This project was created as a beginner-friendly Python programming project.
 
-It demonstrates how basic Python concepts can be combined to create an interactive terminal-based game.
+The purpose of the project is to demonstrate how basic Python programming concepts can be combined to create an interactive terminal-based game.
 
-The project provides practice with **user input, random number generation, variables, lists, dictionaries, functions, loops, conditional statements, exception handling, calculations, score systems, statistics, and game logic**.
+The project provides practice with:
 
-The project was expanded from a basic guessing game into a more complete game system by adding **custom difficulty, optional hints, hint penalties, hot/cold feedback, guess analysis, game history, leaderboards, best attempts, achievements, win streak bonuses, and session statistics**.
+* Variables
+* User input
+* Conditional statements
+* Loops
+* Lists
+* Dictionaries
+* Functions
+* Exception handling
+* Random number generation
+* Arithmetic calculations
+* Game logic
+* Score systems
+* Statistics
+* Achievements
+* Data organization
 
-The project remains focused on beginner-friendly Python programming while providing enough features to demonstrate how a simple program can be gradually expanded.
+The project started as a simple number guessing game and was expanded into a more complete game system with **multiple difficulty levels, custom games, smart hints, Hot/Cold feedback, Closer/Farther feedback, scoring, streaks, achievements, player profiles, performance ratings, game history, recent games, leaderboards, and statistics**.
+
+The project remains focused on beginner-friendly Python programming while demonstrating how a simple program can be gradually expanded with additional features.
 
 ---
 
